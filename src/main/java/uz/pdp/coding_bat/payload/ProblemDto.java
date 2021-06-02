@@ -18,5 +18,5 @@ public class ProblemDto {
     private String editor;
     private boolean completed;
 
-    private Long topicId;
+    private Long languageId;
 }

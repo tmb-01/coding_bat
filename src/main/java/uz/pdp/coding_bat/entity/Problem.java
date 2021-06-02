@@ -25,5 +25,5 @@ public class Problem {
     private String editor;
     private boolean completed;
     @ManyToOne(optional = false)
-    private Topic topic;
+    private ProgrammingLanguage programmingLanguage;
 }

@@ -5,11 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import uz.pdp.coding_bat.entity.Problem;
-import uz.pdp.coding_bat.entity.Topic;
+import uz.pdp.coding_bat.entity.ProgrammingLanguage;
 import uz.pdp.coding_bat.payload.ApiResponse;
 import uz.pdp.coding_bat.payload.ProblemDto;
 import uz.pdp.coding_bat.repository.ProblemRepository;
-import uz.pdp.coding_bat.repository.TopicRepository;
+import uz.pdp.coding_bat.repository.ProgrammingLanguageRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +21,7 @@ public class ProblemService {
     ProblemRepository problemRepository;
 
     @Autowired
-    TopicRepository topicRepository;
+    ProgrammingLanguageRepository programmingLanguageRepository;
 
     public Problem getById(Long id) {
         Optional<Problem> problemById = problemRepository.findById(id);
@@ -42,20 +42,20 @@ public class ProblemService {
     public ResponseEntity<ApiResponse> add(ProblemDto problemDto) {
         String name = problemDto.getName();
         String question = problemDto.getQuestion();
-        Long topicId = problemDto.getTopicId();
+        Long languageId = problemDto.getLanguageId();
 
         if (!name.isEmpty()) {
             if (question.isEmpty()) {
-                if (topicId != 0) {
-                    Optional<Topic> topicById = topicRepository.findById(topicId);
-                    if (topicById.isPresent()) {
+                if (languageId != 0) {
+                    Optional<ProgrammingLanguage> languageById = programmingLanguageRepository.findById(languageId);
+                    if (languageById.isPresent()) {
                         Problem problem = new Problem();
                         problem.setName(problemDto.getName());
                         problem.setEditor(problemDto.getEditor());
                         problem.setQuestion(problemDto.getQuestion());
                         problem.setHint(problemDto.getHint());
                         problem.setSolution(problemDto.getSolution());
-                        problem.setTopic(topicById.get());
+                        problem.setProgrammingLanguage(languageById.get());
                         problem.setCompleted(problemDto.isCompleted());
                         problemRepository.save(problem);
                         return ResponseEntity.ok(new ApiResponse("saved", true));
@@ -75,20 +75,20 @@ public class ProblemService {
         if (problemById.isPresent()) {
             String name = problemDto.getName();
             String question = problemDto.getQuestion();
-            Long topicId = problemDto.getTopicId();
+            Long languageId = problemDto.getLanguageId();
 
             if (!name.isEmpty()) {
                 if (question.isEmpty()) {
-                    if (topicId != 0) {
-                        Optional<Topic> topicById = topicRepository.findById(topicId);
-                        if (topicById.isPresent()) {
+                    if (languageId != 0) {
+                        Optional<ProgrammingLanguage> languageById = programmingLanguageRepository.findById(languageId);
+                        if (languageById.isPresent()) {
                             Problem problem = new Problem();
                             problem.setName(problemDto.getName());
                             problem.setEditor(problemDto.getEditor());
                             problem.setQuestion(problemDto.getQuestion());
                             problem.setHint(problemDto.getHint());
                             problem.setSolution(problemDto.getSolution());
-                            problem.setTopic(topicById.get());
+                            problem.setProgrammingLanguage(languageById.get());
                             problem.setCompleted(problemDto.isCompleted());
                             problemRepository.save(problem);
                             return ResponseEntity.ok(new ApiResponse("updated", true));
